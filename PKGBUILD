@@ -2,7 +2,7 @@
 
 _name=sphinxcontrib_serializinghtml
 pkgname=python-sphinxcontrib-serializinghtml
-pkgver=1.1.7
+pkgver=1.1.8
 pkgrel=1
 pkgdesc='Sphinx extension which outputs "serialized" HTML files (json and pickle)'
 arch=('any')
@@ -11,8 +11,8 @@ license=('BSD')
 makedepends=('python-build' 'python-flit-core' 'python-installer')
 checkdepends=('python-pytest' 'python-sphinx')
 source=("https://files.pythonhosted.org/packages/source/${_name::1}/$_name/$_name-$pkgver.tar.gz")
-sha256sums=('ca31afee32e1508cff4034e258060ce2c81a3b1c49e77da60fdb61f0e7a73c22')
-b2sums=('6453e5b24be17ed10ab2c9567cac273af9941f94850388b4ef61e2114e1e1f6fd5e6fd63306107c55df068d9b4f784c6c282d8f8fba7d4b772272f6c9fa39bee')
+sha256sums=('aaf3026335146e688fd209b72320314b1b278320cf232e3cda198f873838511a')
+b2sums=('b88b5386434b02f18726a84ab600fbd8cebd0a9b732b95fed566b40a75b026c70723eb85d9a3655af57e5476623cd3d0d3cf87596d656f0a7329bfb3ae7f4eac')
 
 build() {
   cd $_name-$pkgver
