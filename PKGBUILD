@@ -18,6 +18,7 @@ build() {
   python -m build --wheel --skip-dependency-check --no-isolation
 }
 
+# FAILED tests/test_serializinghtml.py::test_json - TypeError: Object of type _JavaScript is not JSON serializable
 #check() {
 #  cd "$_name"
 #  pytest
