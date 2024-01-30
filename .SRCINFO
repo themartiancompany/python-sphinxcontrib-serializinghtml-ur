@@ -1,0 +1,18 @@
+pkgbase = python-sphinxcontrib-serializinghtml
+	pkgdesc = Sphinx extension which outputs "serialized" HTML files (json and pickle)
+	pkgver = 1.1.10
+	pkgrel = 1
+	url = https://github.com/sphinx-doc/sphinxcontrib-serializinghtml
+	arch = any
+	license = BSD-2-Clause
+	checkdepends = python-pytest
+	checkdepends = python-sphinx
+	makedepends = git
+	makedepends = python-build
+	makedepends = python-flit-core
+	makedepends = python-installer
+	depends = python
+	source = git+https://github.com/sphinx-doc/sphinxcontrib-serializinghtml.git#tag=1.1.10
+	b2sums = SKIP
+
+pkgname = python-sphinxcontrib-serializinghtml
