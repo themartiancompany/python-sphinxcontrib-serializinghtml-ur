@@ -11,8 +11,9 @@ pkgbase = python-sphinxcontrib-serializinghtml
 	makedepends = python-build
 	makedepends = python-flit-core
 	makedepends = python-installer
-	depends = python
-	source = git+https://github.com/sphinx-doc/sphinxcontrib-serializinghtml.git#tag=2.0.0
+	depends = python>=3.12
+	depends = python<3.13
+	source = sphinxcontrib-serializinghtml-2.0.0::git+https://github.com/sphinx-doc/sphinxcontrib-serializinghtml.git#tag=2.0.0
 	b2sums = da9c959497948b308869321ad8e3ff6baae93948f61180c1b5090b8c453cba12d18147b495653f981fd33a1805829427ae44b135f2bde417e4545ff2c0d77d4b
 
 pkgname = python-sphinxcontrib-serializinghtml

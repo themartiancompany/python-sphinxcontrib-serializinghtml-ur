@@ -4,45 +4,90 @@
 # Maintainer: Pellegrino Prevete (tallero) <pellegrinoprevete@gmail.com>
 # Maintainer: Daniel M. Capella <polyzen@archlinux.org>
 
-pkgname=python-sphinxcontrib-serializinghtml
-_name=${pkgname#python-}
+_py="python"
+_pyver="$( \
+  "${_py}" \
+    -V | \
+    awk \
+      '{print $2}')"
+_pymajver="${_pyver%.*}"
+_pyminver="${_pymajver#*.}"
+_pynextver="${_pymajver%.*}.$(( \
+  ${_pyminver} + 1))"
+_pkg=sphinxcontrib-serializinghtml
+_Pkg=sphinx-doc-serializinghtml
+pkgname="${_py}-${_pkg}"
 pkgver=2.0.0
 pkgrel=1
 pkgdesc='Sphinx extension which outputs "serialized" HTML files (json and pickle)'
-arch=(any)
-url=https://github.com/sphinx-doc/sphinxcontrib-serializinghtml
-license=(BSD-2-Clause)
-depends=(python)
+arch=(
+  any
+)
+_http="https://github.com"
+_ns="sphinx-doc"
+url="${_http}/${_ns}/${_pkg}"
+license=(
+  BSD-2-Clause
+)
+depends=(
+  "${_py}>=${_pymajver}"
+  "${_py}<${_pynextver}"
+)
 makedepends=(
   git
-  python-build
-  python-flit-core
-  python-installer
+  "${_py}-build"
+  "${_py}-flit-core"
+  "${_py}-installer"
 )
 checkdepends=(
-  python-pytest
-  python-sphinx
+  "${_py}-pytest"
+  "${_py}-sphinx"
 )
-source=("git+$url.git#tag=$pkgver")
-b2sums=('da9c959497948b308869321ad8e3ff6baae93948f61180c1b5090b8c453cba12d18147b495653f981fd33a1805829427ae44b135f2bde417e4545ff2c0d77d4b')
+source=(
+  "${_pkg}-${pkgver}::git+${url}.git#tag=$pkgver"
+)
+b2sums=(
+  'da9c959497948b308869321ad8e3ff6baae93948f61180c1b5090b8c453cba12d18147b495653f981fd33a1805829427ae44b135f2bde417e4545ff2c0d77d4b'
+)
 
 build() {
-  cd "$_name"
-  python -m build --wheel --skip-dependency-check --no-isolation
+  cd \
+    "${_pkg}-${pkgver}"
+  "${_py}" \
+    -m \
+      build \
+    --wheel \
+    --skip-dependency-check \
+    --no-isolation
 }
 
 check() {
-  cd "$_name"
+  cd \
+    "${_pkg}-${pkgver}"
+  PYTHONPATH="sphinxcontrib/devhelp:${PYTHONPATH}" \
   pytest
 }
 
 package() {
-  cd "$_name"
-  python -m installer --destdir="$pkgdir" dist/*.whl
-
+  local \
+    _site_packages
+  _site_packages=$( \
+    "${_py}" \
+      -c \
+        "import site; print(site.getsitepackages()[0])")
+  cd \
+    "${_pkg}-${pkgver}"
+  "${_py}" \
+    -m \
+      installer \
+    --destdir="${pkgdir}" \
+    dist/*.whl
   # Symlink license file
-  local site_packages=$(python -c "import site; print(site.getsitepackages()[0])")
-  install -d "$pkgdir"/usr/share/licenses/$pkgname
-  ln -s "$site_packages"/"${_name//-/_}"-$pkgver.dist-info/LICENSE \
-    "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
+  install \
+    -dm755 \
+    "${pkgdir}/usr/share/licenses/${pkgname}"
+  ln \
+    -s \
+    "${_site_packages}/${_Pkg}-${pkgver}.dist-info/LICENSE" \
+    "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
